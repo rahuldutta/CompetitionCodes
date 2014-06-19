@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuffer sb = new StringBuffer("");
+        BigInteger []catlan=new BigInteger[301];
+        BigInteger []fact=new BigInteger[601];
+        fact[0]=BigInteger.ONE;
+        fact[1]=BigInteger.ONE;
+        for(int i=2;i<fact.length;i++){
+            fact[i]=fact[i-1].multiply(BigInteger.valueOf(i));
+        }
+        for(int i=0;i<catlan.length;i++){
+            catlan[i]=fact[2*i].divide(fact[i+1]);
+        }
+        while(true){
+            int n=Integer.parseInt(br.readLine());
+            if(n==0)
+                break;
+            sb.append(catlan[n]).append("\n");
+        }
+        System.out.print(sb);
+    }
+
+}

@@ -1,0 +1,24 @@
+OBJDIR := obj
+CC = g++
+OPTS = -O1
+OFLAGS =  -g
+CXXFLAGS =	-fopenmp -O2 -g -Wall -fmessage-length=0
+CPPFILES = $(wildcard src/*.cpp)
+OBJFILES = $(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir CPPFILES)))
+
+
+
+
+
+all: iter
+
+iter: $(OBJFILES)
+	$(CC) $(CXXFLAGS) $(OPTS) $(OFLAGS) $^ -o $@
+
+$(OBJDIR)/%.o: src/%.cpp
+	$(CC) $(CXXFLAGS) $(OPTS) $(OFLAGS) -o $@ $<
+
+$(OBJFILES): | $(OBJDIR)
+
+$(OBJDIR):
+     mkdir $(OBJDIR)

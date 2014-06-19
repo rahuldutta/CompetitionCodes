@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <cctype>
+#include <stack>
+#include <queue>
+#include <vector>
+#include <map>
+#include <sstream>
+#include <set>
+#include <math.h>
+
+using namespace std;
+
+int Arr[10005][101];
+
+int mod(int m)
+{
+	return m>0?m:-m;
+}
+
+int DP(int S,int arr[],int K, int st, int length)
+{
+	if(st==length-1)
+	return (S+arr[st])%K==0 | (S-arr[st])%K==0;
+	if(Arr[st][mod(S)]!=-1) return Arr[st][mod(S)];
+	return Arr[st][mod(S)]=DP((S+arr[st])%K,arr,K,st+1,length) | DP((S-arr[st])%K,arr,K,st+1,length);
+}
+
+
+int main()
+{
+	//int t1=-23;
+	//cout<<(t1%5);
+	int cases;
+	cin>>cases;
+	while(cases--)
+	{
+		int N,K;
+		cin>>N>>K;
+		int arr[10000];
+		memset(Arr,-1,sizeof(arr));
+		for(int i=0;i<N;i++)
+		{
+			int temp;
+			cin>>temp;
+			arr[i]=temp%K;
+		}
+		if(N==1)
+		{
+			if(arr[0]%K==0)
+				cout<<"Divisible\n";
+			else
+				cout<<"Not Divisible\n";
+				
+		}
+		else
+		{
+			if(DP(arr[0],arr,K,1,N))
+				cout<<"Divisible\n";
+			else
+				cout<<"Not Divisible\n";
+		}
+	}
+	return 0;
+}
